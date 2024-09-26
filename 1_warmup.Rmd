@@ -22,7 +22,10 @@ Assume the following definitions for a survey:
 Generate a vector with 100 random samples that specifies the age of 100 people (in years), but contains exactly 20 minors, 50 adults, and 30 seniors.
 
 ```{r}
-
+minors <-sample(1:17, 20, replace = TRUE)
+adults <-sample(18:64, 50, replace = TRUE)
+seniors <- sample(65:99, 30, replace = TRUE)
+population_vector <- c(minors, adults, seniors)
 ```
 
 Now use some functions on your age vector to answer the following questions:
@@ -30,25 +33,35 @@ Now use some functions on your age vector to answer the following questions:
 1.  What is the average (mean), minimum, and maximum age in this sample?
 
 ```{r}
-
+population <- tibble(age = population_vector)
+mean(population$age)
+min(population)
+max(population)
 ```
 
 2.  How many people are younger than 25 years?
 
 ```{r}
-
+population %>%
+  filter(age < 25) %>%
+  nrow()
 ```
 
 3.  What is the average (mean) age of people older than 50 years?
 
 ```{r}
+population_greater_than_50 <- population %>%
+  filter(age > 50)
 
+mean(population_greater_than_50$age)
 ```
 
 4.  How many people have a round age (i.e., an age that is divisible by 10)? What is their mean age?
 
 ```{r}
-
+population_round_age <- population %>%
+  filter(age%%10 == 0)
+mean(population_round_age$age)
 ```
 
 ## Exercise 1: Strange histograms
@@ -57,10 +70,9 @@ The following plot shows the distribution of fuel economy in city environments, 
 
 ```{r}
 data(mpg)
-
 ggplot(mpg, aes(x = cty)) +    # set mappings for ALL geoms
-  geom_histogram(aes(x = cty), binwidth = 2, fill = "gold", color = "black") +
-  geom_freqpoly(color = "steelblue", size = 2) +
+  geom_histogram(aes(x = cty), binwidth = 1, fill = "gold", color = "black") +
+  geom_freqpoly(color = "steelblue", size = 2, aes(x = cty)) +
   labs(title = "Distribution of fuel economy", 
        x = "Miles per gallon (in city)",
        caption = "Data from ggplot2::mpg") +
