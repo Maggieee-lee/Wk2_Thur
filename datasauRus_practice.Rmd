@@ -24,6 +24,7 @@ Run the chunk below to get more info about this dataset:
 
 ```{r}
 ?datasaurus_dozen
+View(datasaurus_dozen)
 ```
 
 See what datasets are in the datasaurus_dozen:
@@ -36,7 +37,36 @@ datasaurus_dozen %>%
 ## Exercise 1
 Pick 2 datasets and plot them next to one another
 (I'd recommend scatterplot, use facets if you like)
+```{r}
+plot1 <- datasaurus_dozen %>%
+  filter(dataset == "dino" | dataset == "star")
+plot1 %>%
+  ggplot(aes(x= x, y = y, color = dataset)) +
+  geom_point() +
+  facet_wrap(facets = ~ dataset)
+```
 
 ## Exercise 2
 For these same two datasets, find the mean and standard deviation
 for the x and y variable in each. What did you find? 
+```{r}
+vlines <- lines %>%
+  filter(dataset == "v_lines") 
+summary(vlines)
+hlines <- lines %>%
+  filter(dataset == "h_lines")
+summary(hlines)
+sd(vlines$x)
+sd(vlines$y)
+sd(hlines$x)
+sd(hlines$y)
+
+#
+datasaurus_dozen %>%
+  filter(dataset == "dina" | dataset == "star")
+  group_by(dataset) %>%
+  summarise(mean_x = mean(x), sd_x = (sd(x)), mean_y = mean(y), sd_y = sd(y))
+
+#they all have same mean and sd plots are not necessarily same so always plot ahead 
+
+```
