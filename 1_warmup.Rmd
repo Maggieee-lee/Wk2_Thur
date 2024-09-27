@@ -71,7 +71,7 @@ The following plot shows the distribution of fuel economy in city environments, 
 ```{r}
 data(mpg)
 ggplot(mpg, aes(x = cty)) +    # set mappings for ALL geoms
-  geom_histogram(aes(x = cty), binwidth = 1, fill = "gold", color = "black") +
+  geom_histogram(aes(x = cty), binwidth = 2, fill = "gold", color = "black") +
   geom_freqpoly(color = "steelblue", size = 2, aes(x = cty)) +
   labs(title = "Distribution of fuel economy", 
        x = "Miles per gallon (in city)",
